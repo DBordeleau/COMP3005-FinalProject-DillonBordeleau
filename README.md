@@ -82,6 +82,16 @@ return NextResponse.json({ goals }, { status: 200 });
 
 You will see this pattern in every endpoint that makes a database query.
 
+The other methods we use frequently are:
+- getRepostiory(entity) returns a reference to the table associated with the passed entity. For example, to store a reference to the members table as a variable:
+    ```
+    const members = dataSource.getRepository(Member); // Now we can do members.find() to match records in the members table
+    ```
+- someRepository.find(conditions) and findOne(conditions) to return all records matching our conditions or the first record matching our conditions.
+- someRepository.save(entity) similar to commit() in other ORMs. TypeORM will intellgently determine whether to insert a new record or update an existing one based on the presence and value of the passed in entity. Can also be used for partial updates, it will automatically skip undefined properties when doing an update.
+- someRepository.create() Creates a new entity of the type associated with the repository. In the above example where we got the members repository, if we did members.Create() it would create a new empty Member entity. You can also supply initial data.
+- someRepository.delete() Deletes an entity based on the passed in criteria. Example: members.delete(1) would delete the member with id = 1.
+
 The getDataSource function also runs the imported migrations on initialization. You can view the migrations in detail in [/app/migrations](/app/migrations/), but I will briefly describe what each does:
 
 - [CREATE_INDEX.ts](/app/migrations/CREATE_INDEX.ts): This creates **3 indexes.** 

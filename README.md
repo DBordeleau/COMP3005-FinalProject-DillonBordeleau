@@ -46,7 +46,7 @@ Trainers can lookup member data on the trainer dashboard via the [MemberLookup](
 Admins can create new classes from the admin dashboard via the [CreateClassModal](/app/app/components/CreateClassModal.tsx) component. When entering schedule information requests are made to [/api/admin/trainers/available](/app/app/api/admin/trainers/available/route.ts) to populate a list of trainers that are available at the scheduled time. Classes can only be assigned to trainers who have availability for the scheduled time, and no conflicting sessions/classes. Requests are also made to [/api/admin/rooms/check-availability](/app/app/api/admin/rooms/check-availability/route.ts) to prevent double booking of rooms.
 
 # ORM Usage
-I opted to use TypeORM to try and secure bonus marks. The ORM is configured in [/app/data-source.ts](/app/data-source.ts) and the entities and their relations are defined in [/app/models](/app/models/), I will describe the configuration here.
+I opted to use [TypeORM](https://typeorm.io/docs/getting-started) to try and secure bonus marks. The ORM is configured in [/app/data-source.ts](/app/data-source.ts) and the entities and their relations are defined in [/app/models](/app/models/), I will describe the configuration here.
 
 The getDataSource() function initializes the database if it hasn't already been initialized. This creates all tables for the entities exported in [/models/index.ts](/app/models/index.ts). This is done for us automatically because we have the synchronize property set to true.
 
@@ -115,7 +115,7 @@ Every exported migration class has a timestamp in its name because I was getting
 
 Note: The models directory is found within the app directory. My reasoning for this is that's where the TypeORM package is installed. If I wanted to include the TypeORM entities in a top level directory I would've had to install the package in the COMP3005-FinalProject-DillonBordeleau directory as well.
 
-- [/app](/app/app/) - This is the NextJS project. Important directories/files are highlighted below
+- [/app](/app/) - This is the NextJS project. Important directories/files are highlighted below
 
 - [/components](/app/app/components/) - All the React components used in the project live here, a brief description of each component and the endpoints they use can be found in [/docs/components.md](/docs/components.md)
 

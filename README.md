@@ -123,4 +123,10 @@ Note: The models directory is found within the app directory. My reasoning for t
 
 - [/docs](/docs/) - This directory contains the [ER diagram](/docs/ERD.png) and the components and endpoints markdown files.
 
+- [data-source.ts](/app/data-source.ts) - This file contains the configuration for our TypeORM data source. The exported getDataSource() function is what we will use to establish a connection with our postgres database through TypeORM.
+
+- [/models](/app/models/) - Contains all entity classes and their relations. All of the classes used in our TypeORM data source are exported in [index.ts](/app/models/index.ts).
+
+- [/migrations](/app/migrations/) - Contains TypeORM migration classes that create our indexes, views, triggers and our initial admin account.
+
 README.md - You are here.

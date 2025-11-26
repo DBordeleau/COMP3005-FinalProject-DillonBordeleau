@@ -1,6 +1,6 @@
 Dillon Bordeleau | #101038853
 
-[Video Demo](https://www.youtube.com/watch?v=jToE2ep_U5Q)
+[Video Demo](https://www.youtube.com/watch?v=hhLooc8KOKw)
 [Github](https://github.com/DBordeleau/COMP3005-FinalProject-DillonBordeleau)
 
 # How to run:

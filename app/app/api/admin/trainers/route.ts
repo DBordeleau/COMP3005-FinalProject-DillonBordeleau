@@ -4,6 +4,7 @@ import { getUserFromRequest } from '@/app/lib/jwt';
 import { Trainer } from '@/models/Trainer';
 import bcrypt from 'bcrypt';
 
+// Returns a list of all trainers
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);
@@ -33,6 +34,7 @@ export async function GET(request: NextRequest) {
     }
 }
 
+// Creates a new trainer account
 export async function POST(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

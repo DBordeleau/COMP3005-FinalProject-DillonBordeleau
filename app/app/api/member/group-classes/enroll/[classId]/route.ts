@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { ClassEnrollment } from '@/models/ClassEnrollment';
 
+// Unenrolls the logged in member from a group class
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ classId: string }> }

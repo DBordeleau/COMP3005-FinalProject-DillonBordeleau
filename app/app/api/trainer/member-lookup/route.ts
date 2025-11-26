@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 
+// Fetches latest fitness goal and health metric info for the queried member
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

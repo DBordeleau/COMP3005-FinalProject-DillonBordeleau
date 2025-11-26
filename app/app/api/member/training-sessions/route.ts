@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { TrainingSession, TrainingSessionStatus } from '@/models/TrainingSession';
 
+// Books a new training session for the logged in member
 export async function POST(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

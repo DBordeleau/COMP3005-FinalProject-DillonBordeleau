@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { FitnessGoal, GoalStatus } from '@/models/FitnessGoal';
 
+// Update existing fitness goal for the logged in member
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ goalId: string }> }
@@ -62,6 +63,7 @@ export async function PUT(
     }
 }
 
+// Deletes a fitness goal for the logged in member
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ goalId: string }> }

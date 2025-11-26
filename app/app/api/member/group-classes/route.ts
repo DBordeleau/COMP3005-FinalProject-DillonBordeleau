@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 
+// Returns a list of all classes the logged in member is enrolled in
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

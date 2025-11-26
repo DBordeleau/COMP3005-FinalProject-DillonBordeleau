@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { HealthMetric } from '@/models/HealthMetric';
 
+// Fetches health metrics for the logged in member
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);
@@ -43,6 +44,7 @@ export async function GET(request: NextRequest) {
     }
 }
 
+// Logs a new health metric for the logged in member
 export async function POST(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);
@@ -57,7 +59,7 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const { weight, bodyFatPercentage, heartRate, bloodPressure, notes } = body;
 
-        // At least one metric must be provided
+        // At least one metric must be provided, if they are all null return an error
         if (!weight && !bodyFatPercentage && !heartRate && !bloodPressure) {
             return NextResponse.json(
                 { error: 'At least one health metric is required' },

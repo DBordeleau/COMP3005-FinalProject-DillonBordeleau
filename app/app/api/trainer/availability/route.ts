@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { TrainerDaySchedule } from '@/models/TrainerDaySchedule';
 
+// Fetches all existing availability slots for the logged in trainer
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);
@@ -40,6 +41,7 @@ export async function GET(request: NextRequest) {
     }
 }
 
+// Updates availability for the logged in trainer (deletes existing and creates new)
 export async function PUT(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

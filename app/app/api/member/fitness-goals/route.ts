@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { FitnessGoal, GoalStatus } from '@/models/FitnessGoal';
 
+// Returns all fitness goals for the logged in member
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);
@@ -46,6 +47,7 @@ export async function GET(request: NextRequest) {
     }
 }
 
+// Creates a new fitness goal for the logged in member
 export async function POST(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

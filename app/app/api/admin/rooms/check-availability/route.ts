@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 
+// Checks if a room is available for the specified date and time
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

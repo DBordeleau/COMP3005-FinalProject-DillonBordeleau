@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { HealthMetric } from '@/models/HealthMetric';
 
+// Deletes a specific health metric for the logged in member
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ metricId: string }> }

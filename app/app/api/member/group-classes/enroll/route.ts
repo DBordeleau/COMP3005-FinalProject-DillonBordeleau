@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { ClassEnrollment } from '@/models/ClassEnrollment';
 
+// Enrolls the logged in member in a group class if it isn't full and they aren't already enrolled
 export async function POST(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

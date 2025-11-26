@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { TrainingSession, TrainingSessionStatus } from '@/models/TrainingSession';
 
+// Reschedules a training session for the logged in member
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ sessionId: string }> }
@@ -60,6 +61,7 @@ export async function PUT(
     }
 }
 
+// Cancels a training session for the logged in member
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ sessionId: string }> }

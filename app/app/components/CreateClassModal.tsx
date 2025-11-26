@@ -108,12 +108,12 @@ export default function CreateClassModal({ onClose, onSuccess, groupClass }: Cre
 
             if (response.ok) {
                 const data = await response.json();
-                console.log('Fetched rooms data:', data.rooms);
-                const rooms = (data.rooms || []).map((r: any) => ({
-                    roomId: r.room_id || r.roomId,  // Try both property names
-                    name: r.name
-                }));
-                console.log('Mapped rooms:', rooms);
+                const rooms = (data.rooms || [])
+                    .filter((r: any) => r.room_id !== undefined && r.room_id !== null)
+                    .map((r: any) => ({
+                        roomId: r.room_id,  // Changed from r.roomId to r.room_id
+                        name: r.name
+                    }));
                 setRooms(rooms);
             }
         } catch (error) {
@@ -294,22 +294,18 @@ export default function CreateClassModal({ onClose, onSuccess, groupClass }: Cre
                         <label className="block text-sm font-medium text-gray-700">Room</label>
                         <select
                             value={formData.roomId}
-                            onChange={(e) => {
-                                console.log('Selected room value:', e.target.value);
-                                console.log('Available rooms:', rooms);
-                                setFormData({ ...formData, roomId: e.target.value });
-                            }}
+                            onChange={(e) => setFormData({ ...formData, roomId: e.target.value })}
                             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         >
                             <option value="">Select a room</option>
-                            {rooms.map(room => {
-                                console.log('Rendering room option:', room);
-                                return (
+                            {rooms
+                                .filter(room => room.roomId !== undefined && room.roomId !== null)
+                                .map(room => (
                                     <option key={room.roomId} value={room.roomId}>
                                         {room.name}
                                     </option>
-                                );
-                            })}
+                                ))
+                            }
                         </select>
                     </div>
 

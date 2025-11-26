@@ -28,8 +28,7 @@ export async function GET(request: NextRequest) {
                 notes
             FROM health_metrics
             WHERE member_id = $1
-            ORDER BY recorded_date DESC
-            LIMIT 20`,
+            ORDER BY recorded_date DESC`,
             [user.memberId]
         );
 

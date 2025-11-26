@@ -32,8 +32,7 @@ export async function GET(request: NextRequest) {
             WHERE ts.member_id = $1 
             AND ts.status = 'scheduled'
             AND ts.session_date >= CURRENT_DATE
-            ORDER BY ts.session_date, ts.start_time
-            LIMIT 10`,
+            ORDER BY ts.session_date, ts.start_time`,
             [user.memberId]
         );
 

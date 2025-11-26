@@ -77,11 +77,12 @@ export async function DELETE(
             );
         }
 
+        const { roomId } = await params;
         const dataSource = await getDataSource();
         const roomRepository = dataSource.getRepository(Room);
 
         const room = await roomRepository.findOne({
-            where: { roomId: parseInt(params.roomId) }
+            where: { roomId: parseInt(roomId) }
         });
 
         if (!room) {

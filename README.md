@@ -1,5 +1,8 @@
 Dillon Bordeleau | #101038853
 
+[Video Demo](https://www.youtube.com/watch?v=jToE2ep_U5Q)
+[Github](https://github.com/DBordeleau/COMP3005-FinalProject-DillonBordeleau)
+
 # How to run:
 
 Install the required dependencies by navigating to the "app" directory from the root and running "npm install". After installing dependencies, from within the same "app" directory, run the "npm run dev" command. 

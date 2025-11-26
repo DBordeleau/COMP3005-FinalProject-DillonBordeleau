@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 
+// Uses the member_dashboard_summary view to fetch dashboard data for the logged in member
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

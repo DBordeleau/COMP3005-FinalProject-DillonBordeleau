@@ -77,6 +77,18 @@ export default function HealthMetricsSection({ memberId }: HealthMetricsSectionP
         }
     };
 
+    const formatDateTime = (dateString: string) => {
+        const date = new Date(dateString);
+        return date.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
+    };
+
     const latestMetric = metrics.length > 0 ? metrics[0] : null;
 
     return (
@@ -101,6 +113,11 @@ export default function HealthMetricsSection({ memberId }: HealthMetricsSectionP
                         {/* Latest Metrics Summary */}
                         <div>
                             <h3 className="text-sm font-medium text-gray-700 mb-3">Latest Readings</h3>
+                            {latestMetric && (
+                                <p className="text-xs text-gray-500 mb-2">
+                                    Recorded: {formatDateTime(latestMetric.recorded_date)}
+                                </p>
+                            )}
                             <div className="grid grid-cols-2 gap-4">
                                 {latestMetric?.weight && (
                                     <div className="border border-gray-200 rounded-lg p-3">
@@ -138,11 +155,7 @@ export default function HealthMetricsSection({ memberId }: HealthMetricsSectionP
                                         <div className="flex justify-between items-start">
                                             <div className="flex-1">
                                                 <p className="text-xs text-gray-500 mb-2">
-                                                    {new Date(metric.recorded_date).toLocaleDateString('en-US', {
-                                                        year: 'numeric',
-                                                        month: 'long',
-                                                        day: 'numeric'
-                                                    })}
+                                                    {formatDateTime(metric.recorded_date)}
                                                 </p>
                                                 <div className="grid grid-cols-2 gap-2 text-xs">
                                                     {metric.weight && (
@@ -177,7 +190,7 @@ export default function HealthMetricsSection({ memberId }: HealthMetricsSectionP
                                             <button
                                                 onClick={() => handleDeleteMetric(metric.metric_id)}
                                                 disabled={deletingMetricId === metric.metric_id}
-                                                className="ml-2 text-xs text-red-600 hover:text-red-800 disabled:text-gray-400"
+                                                className="ml-2 text-xs text-red-600 hover:text-red-800 disabled:text-gray-400 cursor-pointer"
                                             >
                                                 {deletingMetricId === metric.metric_id ? 'Deleting...' : 'Delete'}
                                             </button>

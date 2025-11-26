@@ -18,7 +18,7 @@ New members can register at the [/register](/app/app/register/page.tsx) route. A
 Members can update their profile details by pressing the "Edit profile" button in the [DashboardHeader](/app/app/components/DashboardHeader.tsx) component. Members can also create new fitness goals and log health metrics from the dashboard by pressing the respective buttons in the [FitnessGoalsSection](/app/app/components/FitnessGoalsSection.tsx) and [HealthMetricSection](/app/app/components/HealthMetricSection.tsx). The [CreateGoalModal](/app/app/components/CreateGoalModal.tsx) and [LogHealthMetricModal](/app/app/components/LogHealthMetricModal.tsx) components use the [/api/member/fitness-goals/](/app/app/api/member/fitness-goals/) and [/api/member/health-metrics/](/app/app/api/member/health-metrics/) endpoints for their respective CRUD operations.
 
 ### Health History
-The HealthMetricSection component on the member dashboard maintains a list of health metrics for the logged in user, in descending order of when they were logged.
+The [HealthMetricSection](/app/app/components/HealthMetricSection.tsx) component on the member dashboard maintains a list of health metrics for the logged in user, in descending order of when they were logged.
 
 ### Dashboard
 The member dashboard displays stats at the top of the page for current active goals, classes and booked sessions. It also shows a list of upcoming sessions, classes, created fitness goals and logged health metrics.

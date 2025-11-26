@@ -52,7 +52,6 @@ export async function getDataSource(): Promise<DataSource> {
         if (!dataSource.isInitialized) {
             await dataSource.initialize();
             await dataSource.runMigrations();
-            console.log('✓ Database initialized and migrations run successfully!');
         }
 
         return dataSource;

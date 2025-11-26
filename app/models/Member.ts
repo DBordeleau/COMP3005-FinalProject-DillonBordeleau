@@ -39,6 +39,4 @@ export class Member {
     @OneToMany(() => require('./ClassEnrollment').ClassEnrollment, (enrollment: any) => enrollment.member, { cascade: true })
     classEnrollments!: any[];
 
-    @OneToMany(() => require('./Bill').Bill, (bill: any) => bill.member, { cascade: true })
-    bills!: any[];
 }

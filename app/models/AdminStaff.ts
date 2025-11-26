@@ -17,10 +17,5 @@ export class AdminStaff {
     @Column({ name: 'last_name', type: 'varchar' })
     lastName!: string;
 
-    // Relations
-    @OneToMany(() => require('./MaintenanceTask').MaintenanceTask, (task: any) => task.adminStaff)
-    maintenanceTasks!: any[];
-
-    @OneToMany(() => require('./Bill').Bill, (bill: any) => bill.adminStaff)
-    bills!: any[];
+    // Relations (removed bill and equipment relations)
 }

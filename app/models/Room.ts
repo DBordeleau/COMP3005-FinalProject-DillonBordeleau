@@ -21,9 +21,6 @@ export class Room {
     roomType!: RoomType;
 
     // Relations
-    @OneToMany(() => require('./Equipment').Equipment, (equipment: any) => equipment.room, { cascade: true })
-    equipment!: any[];
-
     @OneToMany(() => require('./TrainingSession').TrainingSession, (session: any) => session.room)
     trainingSessions!: any[];
 

@@ -163,7 +163,7 @@ export default function MemberLookup({ externalSearchTrigger }: MemberLookupProp
                                     {memberData.latest_metric.weight && (
                                         <div>
                                             <p className="text-xs text-gray-500">Weight</p>
-                                            <p className="text-lg font-semibold">{memberData.latest_metric.weight} kg</p>
+                                            <p className="text-lg font-semibold">{memberData.latest_metric.weight} lbs</p>
                                         </div>
                                     )}
                                     {memberData.latest_metric.body_fat_percentage && (

@@ -1,3 +1,5 @@
+// Trainer dashboard displaying upcoming sessions and member lookup functionality
+
 'use client';
 
 import { useEffect, useState } from 'react';

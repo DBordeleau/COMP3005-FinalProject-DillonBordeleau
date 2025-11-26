@@ -1,3 +1,5 @@
+// Trainer login page sets userType to "trainer" on submission
+
 'use client';
 
 import LoginForm from '@/app/components/LoginForm';

@@ -1,3 +1,5 @@
+// Admin login page sets userType to "admin" on submission
+
 'use client';
 
 import LoginForm from '@/app/components/LoginForm';

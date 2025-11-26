@@ -1,3 +1,5 @@
+// Member registration page
+
 'use client';
 
 import MemberRegistrationForm from '../components/MemberRegistrationForm';

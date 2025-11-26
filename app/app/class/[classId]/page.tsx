@@ -1,3 +1,5 @@
+// Dedicated class page that shows enrollment details for a specific class
+
 'use client';
 
 import { useEffect, useState } from 'react';

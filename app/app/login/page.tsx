@@ -1,3 +1,5 @@
+// Default login page for members sets userType to "member" on submission
+
 'use client';
 
 import LoginForm from '@/app/components/LoginForm';

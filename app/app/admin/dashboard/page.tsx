@@ -1,3 +1,5 @@
+// Admin dashboard where admins can create trainer accounts, rooms and classes
+
 'use client';
 
 import { useEffect, useState } from 'react';

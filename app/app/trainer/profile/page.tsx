@@ -1,3 +1,5 @@
+// Trainer profile page where trainers can update personal information, change their password, and set their availability
+
 'use client';
 
 import { useEffect, useState, FormEvent } from 'react';

@@ -1,3 +1,5 @@
+// Member dashboard page displaying member data and allowing members to register for training sessions, classes and log goals and health metrics
+
 'use client';
 
 import { useEffect, useState } from 'react';

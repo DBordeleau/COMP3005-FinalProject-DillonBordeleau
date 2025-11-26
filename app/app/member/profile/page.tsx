@@ -1,3 +1,5 @@
+// Member profile page where members can update personal information and change their password
+
 'use client';
 
 import { useEffect, useState, FormEvent } from 'react';

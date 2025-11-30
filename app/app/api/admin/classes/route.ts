@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { GroupClass } from '@/models/GroupClass';
 
+// Returns a list of all classes with trainer and room details ordered by day and time
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);
@@ -60,6 +61,7 @@ export async function GET(request: NextRequest) {
     }
 }
 
+// Creates a new class with provided details
 export async function POST(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

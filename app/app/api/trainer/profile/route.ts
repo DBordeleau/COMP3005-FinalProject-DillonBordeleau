@@ -4,6 +4,7 @@ import { Trainer } from '@/models/Trainer';
 import bcrypt from 'bcrypt';
 import { getUserFromRequest } from '@/app/lib/jwt';
 
+// Gets profile data for the logged in trainer
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);
@@ -44,6 +45,7 @@ export async function GET(request: NextRequest) {
     }
 }
 
+// Updates profile data for the logged in trainer
 export async function PUT(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

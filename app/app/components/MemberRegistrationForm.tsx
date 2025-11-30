@@ -61,7 +61,7 @@ export default function MemberRegistrationForm() {
         setLoading(true);
 
         try {
-            const response = await fetch('/api/member/registration', {
+            const response = await fetch('/api/member/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

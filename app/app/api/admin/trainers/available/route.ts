@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 
 // Returns a list of trainers available on a given day and time
+// Used to populate trainer dropdown when booking training sessions or creating group classes
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

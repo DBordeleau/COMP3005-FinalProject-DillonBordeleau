@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { Room } from '@/models/Room';
 
+// Updates room details for a specific room ID
 export async function PUT(
     request: NextRequest,
     { params }: { params: { roomId: string } }
@@ -63,6 +64,7 @@ export async function PUT(
     }
 }
 
+// Deletes a room with the specified room ID
 export async function DELETE(
     request: NextRequest,
     { params }: { params: { roomId: string } }

@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { Member } from '@/models/Member';
 import bcrypt from 'bcrypt';
 
+// Creates a new member account in the database if the email is not already registered
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();

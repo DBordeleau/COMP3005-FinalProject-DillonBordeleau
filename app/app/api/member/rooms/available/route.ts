@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 
-// Returns a list of available rooms for the specified date and time
+// Returns a list of available rooms for the specified date and time (used for booking training sessions)
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

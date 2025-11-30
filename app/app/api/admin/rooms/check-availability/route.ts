@@ -3,6 +3,8 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 
 // Checks if a room is available for the specified date and time
+// A room is available as long as it does not have a class scheduled at the specified time
+// I am making the assumption that multiple training sessions can occur in the same room
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);
@@ -43,6 +45,7 @@ export async function GET(request: NextRequest) {
         const dataSource = await getDataSource();
 
         // Check if room is already booked at this time (excluding current class if editing)
+        // If we don't exclude the current class we can never edit just a classes name, capacity or description without changing its time
         const conflictQuery = excludeClassId
             ? `SELECT * FROM group_classes
                WHERE room_id = $1

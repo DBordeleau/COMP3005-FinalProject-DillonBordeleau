@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { GroupClass } from '@/models/GroupClass';
 
+// Updates class details for a specific class ID
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ classId: string }> }
@@ -60,6 +61,7 @@ export async function PUT(
     }
 }
 
+// Deletes a class with the specified class ID
 export async function DELETE(
     request: NextRequest,
     { params }: { params: Promise<{ classId: string }> }

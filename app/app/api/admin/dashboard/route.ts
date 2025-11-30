@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { AdminStaff } from '@/models/AdminStaff';
 
+// Returns information sassociated with the logged in admin
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

@@ -3,6 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { Room } from '@/models/Room';
 
+// Returns a list of all rooms in the database
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);
@@ -41,6 +42,7 @@ export async function GET(request: NextRequest) {
     }
 }
 
+// Creates a new room with provided details
 export async function POST(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

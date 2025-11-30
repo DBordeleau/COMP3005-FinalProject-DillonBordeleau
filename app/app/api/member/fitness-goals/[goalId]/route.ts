@@ -3,7 +3,7 @@ import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 import { FitnessGoal, GoalStatus } from '@/models/FitnessGoal';
 
-// Update existing fitness goal for the logged in member
+// Update existing fitness goal for the logged in member (can only change status)
 export async function PUT(
     request: NextRequest,
     { params }: { params: Promise<{ goalId: string }> }

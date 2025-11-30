@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 
+// Returns a list of all upcoming group sessions and training sessions associated with the logged in trainer
+// Used to populate their schedule in the dashboard so only upcoming sessions are returned
+// Anything in the past is omitted
 export async function GET(request: NextRequest) {
     try {
         const user = getUserFromRequest(request);

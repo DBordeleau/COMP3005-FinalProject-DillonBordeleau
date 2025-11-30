@@ -45,7 +45,7 @@ export default function LoginForm({ userType, title, registerLink }: LoginFormPr
         setLoading(true);
 
         try {
-            const endpoint = `/api/${userType}/login`;
+            const endpoint = `/api/login`;
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
@@ -54,6 +54,7 @@ export default function LoginForm({ userType, title, registerLink }: LoginFormPr
                 body: JSON.stringify({
                     email: formData.email,
                     password: formData.password,
+                    userType: userType,
                 }),
             });
 

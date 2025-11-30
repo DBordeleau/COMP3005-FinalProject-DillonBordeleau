@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getDataSource } from '@/data-source';
 import { getUserFromRequest } from '@/app/lib/jwt';
 
+// Retrieves details of a specific class along with the list of enrolled members
 export async function GET(
     request: NextRequest,
     { params }: { params: Promise<{ classId: string }> }

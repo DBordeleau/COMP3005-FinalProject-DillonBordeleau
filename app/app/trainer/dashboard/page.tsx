@@ -31,7 +31,7 @@ export default function TrainerDashboard() {
             const token = localStorage.getItem('token');
 
             if (!token) {
-                router.push('/trainer-login');
+                router.push('/login/trainer');
                 return;
             }
 
@@ -44,7 +44,7 @@ export default function TrainerDashboard() {
             if (!response.ok) {
                 if (response.status === 401) {
                     localStorage.removeItem('token');
-                    router.push('/trainer-login');
+                    router.push('/login/trainer');
                     return;
                 }
                 throw new Error('Failed to fetch dashboard data');

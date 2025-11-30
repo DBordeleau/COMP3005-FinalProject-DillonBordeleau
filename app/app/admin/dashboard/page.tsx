@@ -38,7 +38,7 @@ export default function AdminDashboard() {
             const token = localStorage.getItem('token');
 
             if (!token) {
-                router.push('/admin-login');
+                router.push('/login/admin');
                 return;
             }
 
@@ -51,7 +51,7 @@ export default function AdminDashboard() {
             if (!response.ok) {
                 if (response.status === 401) {
                     localStorage.removeItem('token');
-                    router.push('/admin-login');
+                    router.push('/login/admin');
                     return;
                 }
                 throw new Error('Failed to fetch admin data');

@@ -10,6 +10,8 @@ Install the required dependencies by navigating to the "app" directory from the 
 Follow the link in your terminal to open the web app (usually localhost:3000 by default).
 
 # Supported Operations
+The operations available to the user are defined by their user type. My app uses 3 distinct tables for members, trainers and admin_staff and JWT tokens to store their ID for the current session. This ID is used to authorize all operations. If a member tries to access the trainer/admin dashboard or API routes, they will receive an error when their ID cannot be matched in the trainer/admin table and be redirected to the trainer/admin login. Same goes for the other user types trying to access any operations for the other users.
+
 Below is a list of supported functionality from the project specs and the components & endpoints involved with each:
 
 ## Member Functions

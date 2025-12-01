@@ -32,9 +32,6 @@ export class TrainingSession {
     @Column({ name: 'status', type: 'enum', enum: TrainingSessionStatus, default: TrainingSessionStatus.SCHEDULED })
     status!: TrainingSessionStatus;
 
-    @Column({ type: 'text', nullable: true })
-    notes!: string;
-
     // Relations
     @ManyToOne(() => require('./Member').Member, (member: any) => member.trainingSessions, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'member_id' })

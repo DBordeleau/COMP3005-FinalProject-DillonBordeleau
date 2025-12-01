@@ -55,7 +55,7 @@ export default function RoomsList({ refreshTrigger, onRefresh }: RoomsListProps)
         try {
             const token = localStorage.getItem('token');
 
-            const response = await fetch(`/api/admin/rooms/${roomId}`, {
+            const response = await fetch(`/api/admin/rooms?roomId=${roomId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`

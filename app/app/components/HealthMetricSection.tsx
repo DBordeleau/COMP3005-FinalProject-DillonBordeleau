@@ -58,7 +58,7 @@ export default function HealthMetricsSection({ memberId }: HealthMetricsSectionP
         try {
             const token = localStorage.getItem('token');
 
-            const response = await fetch(`/api/member/health-metrics/${metricId}`, {
+            const response = await fetch(`/api/member/health-metrics?metricId=${metricId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

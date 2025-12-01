@@ -56,6 +56,42 @@ export async function PUT(request: NextRequest) {
         const body = await request.json();
         const { schedules } = body;
 
+        // Validate that all schedules have end time after start time
+        for (const schedule of schedules) {
+            if (schedule.start_time >= schedule.end_time) {
+                return NextResponse.json(
+                    { error: `Invalid time range for ${schedule.day}: End time must be after start time` },
+                    { status: 400 }
+                );
+            }
+        }
+
+        // Check for overlapping schedules on the same day
+        for (let i = 0; i < schedules.length; i++) {
+            for (let j = i + 1; j < schedules.length; j++) {
+                const schedule1 = schedules[i];
+                const schedule2 = schedules[j];
+
+                // Only check if they're on the same day
+                if (schedule1.day === schedule2.day) {
+                    // Check if time ranges overlap
+                    const overlap = (
+                        (schedule1.start_time < schedule2.end_time && schedule1.end_time > schedule2.start_time) ||
+                        (schedule2.start_time < schedule1.end_time && schedule2.end_time > schedule1.start_time)
+                    );
+
+                    if (overlap) {
+                        return NextResponse.json(
+                            {
+                                error: `Invalid availability. Overlapping schedules detected for ${schedule1.day}: ${schedule1.start_time}-${schedule1.end_time} conflicts with ${schedule2.start_time}-${schedule2.end_time}`
+                            },
+                            { status: 400 }
+                        );
+                    }
+                }
+            }
+        }
+
         const dataSource = await getDataSource();
         const scheduleRepository = dataSource.getRepository(TrainerDaySchedule);
 

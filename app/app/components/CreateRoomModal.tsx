@@ -29,8 +29,12 @@ export default function CreateRoomModal({ onClose, onSuccess, room }: CreateRoom
 
         try {
             const token = localStorage.getItem('token');
-            const url = room ? `/api/admin/rooms/${room.roomId}` : '/api/admin/rooms';
+            const url = '/api/admin/rooms';
             const method = room ? 'PUT' : 'POST';
+
+            const body = room
+                ? { roomId: room.roomId, ...formData }
+                : formData;
 
             const response = await fetch(url, {
                 method,
@@ -38,7 +42,7 @@ export default function CreateRoomModal({ onClose, onSuccess, room }: CreateRoom
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(body)
             });
 
             const data = await response.json();

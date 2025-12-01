@@ -52,13 +52,13 @@ export default function FitnessGoalsSection({ memberId }: FitnessGoalsSectionPro
         try {
             const token = localStorage.getItem('token');
 
-            const response = await fetch(`/api/member/fitness-goals/${goalId}`, {
+            const response = await fetch(`/api/member/fitness-goals`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ status: newStatus })
+                body: JSON.stringify({ goalId, status: newStatus })
             });
 
             if (response.ok) {
@@ -81,7 +81,7 @@ export default function FitnessGoalsSection({ memberId }: FitnessGoalsSectionPro
         try {
             const token = localStorage.getItem('token');
 
-            const response = await fetch(`/api/member/fitness-goals/${goalId}`, {
+            const response = await fetch(`/api/member/fitness-goals?goalId=${goalId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

@@ -117,10 +117,12 @@ export default function BookTrainingSessionModal({ onClose, onSuccess, existingS
 
         try {
             const token = localStorage.getItem('token');
-            const url = existingSession
-                ? `/api/member/training-sessions/${existingSession.sessionId}`
-                : '/api/member/training-sessions';
+            const url = '/api/member/training-sessions';
             const method = existingSession ? 'PUT' : 'POST';
+
+            const body = existingSession
+                ? { sessionId: existingSession.sessionId, ...formData }
+                : formData;
 
             const response = await fetch(url, {
                 method,
@@ -128,7 +130,7 @@ export default function BookTrainingSessionModal({ onClose, onSuccess, existingS
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(body)
             });
 
             const data = await response.json();

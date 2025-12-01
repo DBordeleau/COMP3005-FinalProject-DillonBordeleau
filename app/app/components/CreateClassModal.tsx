@@ -33,57 +33,29 @@ export default function CreateClassModal({ onClose, onSuccess, groupClass }: Cre
         roomId: groupClass?.roomId ? String(groupClass.roomId) : ''
     });
     const [availableTrainers, setAvailableTrainers] = useState<Trainer[]>([]);
-    const [allTrainers, setAllTrainers] = useState<Trainer[]>([]);
     const [rooms, setRooms] = useState<Room[]>([]);
     const [loading, setLoading] = useState(false);
+    const [loadingTrainers, setLoadingTrainers] = useState(false);
     const [error, setError] = useState('');
 
     useEffect(() => {
         fetchRooms();
-        fetchAllTrainers();
     }, []);
 
     useEffect(() => {
         if (formData.classDay && formData.startTime && formData.endTime) {
-            if (groupClass) {
-                // When editing, show all trainers
-                setAvailableTrainers(allTrainers);
-            } else {
-                // When creating, fetch available trainers
-                fetchAvailableTrainers();
-            }
+            fetchAvailableTrainers();
         }
-    }, [formData.classDay, formData.startTime, formData.endTime, allTrainers, groupClass]);
-
-    const fetchAllTrainers = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await fetch('/api/admin/trainers', {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                const trainers = (data.trainers || []).map((t: any) => ({
-                    trainerId: t.trainer_id,
-                    firstName: t.first_name,
-                    lastName: t.last_name
-                }));
-                setAllTrainers(trainers);
-                if (groupClass) {
-                    setAvailableTrainers(trainers);
-                }
-            }
-        } catch (error) {
-            console.error('Error fetching all trainers:', error);
-        }
-    };
+    }, [formData.classDay, formData.startTime, formData.endTime]);
 
     const fetchAvailableTrainers = async () => {
+        setLoadingTrainers(true);
         try {
             const token = localStorage.getItem('token');
+            // When editing, exclude the current class from conflicts
+            const excludeParam = groupClass ? `&excludeClassId=${groupClass.classId}` : '';
             const response = await fetch(
-                `/api/admin/trainers/available?day=${formData.classDay}&startTime=${formData.startTime}&endTime=${formData.endTime}`,
+                `/api/admin/trainers/available?day=${formData.classDay}&startTime=${formData.startTime}&endTime=${formData.endTime}${excludeParam}`,
                 {
                     headers: { 'Authorization': `Bearer ${token}` }
                 }
@@ -96,6 +68,8 @@ export default function CreateClassModal({ onClose, onSuccess, groupClass }: Cre
         } catch (error) {
             console.error('Error fetching available trainers:', error);
             setAvailableTrainers([]);
+        } finally {
+            setLoadingTrainers(false);
         }
     };
 
@@ -111,7 +85,7 @@ export default function CreateClassModal({ onClose, onSuccess, groupClass }: Cre
                 const rooms = (data.rooms || [])
                     .filter((r: any) => r.room_id !== undefined && r.room_id !== null)
                     .map((r: any) => ({
-                        roomId: r.room_id,  // Changed from r.roomId to r.room_id
+                        roomId: r.room_id,
                         name: r.name
                     }));
                 setRooms(rooms);
@@ -152,8 +126,12 @@ export default function CreateClassModal({ onClose, onSuccess, groupClass }: Cre
                 throw new Error(data.error || 'Room not available');
             }
 
-            const url = groupClass ? `/api/admin/classes/${groupClass.classId}` : '/api/admin/classes';
+            const url = `/api/admin/classes`;
             const method = groupClass ? 'PUT' : 'POST';
+
+            const body = groupClass
+                ? { classId: groupClass.classId, ...formData }
+                : formData;
 
             const response = await fetch(url, {
                 method,
@@ -161,7 +139,7 @@ export default function CreateClassModal({ onClose, onSuccess, groupClass }: Cre
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(body)
             });
 
             if (!response.ok) {
@@ -270,24 +248,30 @@ export default function CreateClassModal({ onClose, onSuccess, groupClass }: Cre
                     <div>
                         <label className="block text-sm font-medium text-gray-700">
                             Trainer
-                            {!groupClass && availableTrainers.length === 0 && formData.classDay && formData.startTime && formData.endTime && (
+                            {!groupClass && !loadingTrainers && availableTrainers.length === 0 && formData.classDay && formData.startTime && formData.endTime && (
                                 <span className="text-xs text-red-600 ml-2">
                                     (No trainers available at this time)
                                 </span>
                             )}
                         </label>
-                        <select
-                            value={formData.trainerId}
-                            onChange={(e) => setFormData({ ...formData, trainerId: e.target.value })}
-                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                        >
-                            <option value="">Select a trainer</option>
-                            {availableTrainers.map(trainer => (
-                                <option key={trainer.trainerId} value={trainer.trainerId}>
-                                    {trainer.firstName} {trainer.lastName}
-                                </option>
-                            ))}
-                        </select>
+                        {loadingTrainers ? (
+                            <div className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-50 text-gray-500 text-sm">
+                                Loading trainers...
+                            </div>
+                        ) : (
+                            <select
+                                value={formData.trainerId}
+                                onChange={(e) => setFormData({ ...formData, trainerId: e.target.value })}
+                                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            >
+                                <option value="">Select a trainer</option>
+                                {availableTrainers.map(trainer => (
+                                    <option key={trainer.trainerId} value={String(trainer.trainerId)}>
+                                        {trainer.firstName} {trainer.lastName}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
                     </div>
 
                     <div>

@@ -76,6 +76,15 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const { className, classDay, startTime, endTime, capacity, description, trainerId, roomId } = body;
 
+        // Validate that end time is after start time
+        // There should be no trainers available in this case anyway, but just to be safe & clear
+        if (startTime >= endTime) {
+            return NextResponse.json(
+                { error: 'End time must be after start time' },
+                { status: 400 }
+            );
+        }
+
         const dataSource = await getDataSource();
         const classRepository = dataSource.getRepository(GroupClass);
 
@@ -99,6 +108,127 @@ export async function POST(request: NextRequest) {
 
     } catch (error) {
         console.error('Error creating class:', error);
+        return NextResponse.json(
+            { error: 'Internal server error' },
+            { status: 500 }
+        );
+    }
+}
+
+// Updates class details for a specific class ID
+export async function PUT(request: NextRequest) {
+    try {
+        const user = getUserFromRequest(request);
+
+        if (!user || user.userType !== 'admin') {
+            return NextResponse.json(
+                { error: 'Unauthorized' },
+                { status: 401 }
+            );
+        }
+
+        const body = await request.json();
+        const { classId, className, classDay, startTime, endTime, capacity, description, trainerId, roomId } = body;
+
+        if (!classId) {
+            return NextResponse.json(
+                { error: 'Class ID is required' },
+                { status: 400 }
+            );
+        }
+
+        // Validate that end time is after start time
+        if (startTime >= endTime) {
+            return NextResponse.json(
+                { error: 'End time must be after start time' },
+                { status: 400 }
+            );
+        }
+
+        const dataSource = await getDataSource();
+        const classRepository = dataSource.getRepository(GroupClass);
+
+        const groupClass = await classRepository.findOne({
+            where: { classId: parseInt(classId) }
+        });
+
+        if (!groupClass) {
+            return NextResponse.json(
+                { error: 'Class not found' },
+                { status: 404 }
+            );
+        }
+
+        groupClass.className = className;
+        groupClass.classDay = classDay;
+        groupClass.startTime = startTime;
+        groupClass.endTime = endTime;
+        groupClass.capacity = parseInt(capacity);
+        groupClass.description = description || null;
+        groupClass.trainerId = parseInt(trainerId);
+        groupClass.roomId = parseInt(roomId);
+
+        await classRepository.save(groupClass);
+
+        return NextResponse.json(
+            { message: 'Class updated successfully' },
+            { status: 200 }
+        );
+
+    } catch (error) {
+        console.error('Error updating class:', error);
+        return NextResponse.json(
+            { error: 'Internal server error' },
+            { status: 500 }
+        );
+    }
+}
+
+// Deletes a class with the specified class ID
+export async function DELETE(request: NextRequest) {
+    try {
+        const user = getUserFromRequest(request);
+
+        if (!user || user.userType !== 'admin') {
+            return NextResponse.json(
+                { error: 'Unauthorized' },
+                { status: 401 }
+            );
+        }
+
+        const { searchParams } = new URL(request.url);
+        const classId = searchParams.get('classId');
+
+        if (!classId) {
+            return NextResponse.json(
+                { error: 'Class ID is required' },
+                { status: 400 }
+            );
+        }
+
+        const dataSource = await getDataSource();
+        const classRepository = dataSource.getRepository(GroupClass);
+
+        const groupClass = await classRepository.findOne({
+            where: { classId: parseInt(classId) }
+        });
+
+        if (!groupClass) {
+            return NextResponse.json(
+                { error: 'Class not found' },
+                { status: 404 }
+            );
+        }
+
+        await classRepository.remove(groupClass);
+
+        return NextResponse.json(
+            { message: 'Class deleted successfully' },
+            { status: 200 }
+        );
+
+    } catch (error) {
+        console.error('Error deleting class:', error);
         return NextResponse.json(
             { error: 'Internal server error' },
             { status: 500 }

@@ -71,7 +71,7 @@ export default function ClassList({ refreshTrigger, onRefresh }: ClassListProps)
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`/api/admin/classes/${classId}`, {
+            const response = await fetch(`/api/admin/classes?classId=${classId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

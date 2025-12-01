@@ -93,3 +93,58 @@ export async function POST(request: NextRequest) {
         );
     }
 }
+
+// Deletes a specific health metric for the logged in member
+export async function DELETE(request: NextRequest) {
+    try {
+        const user = getUserFromRequest(request);
+
+        if (!user || user.userType !== 'member') {
+            return NextResponse.json(
+                { error: 'Unauthorized' },
+                { status: 401 }
+            );
+        }
+
+        const { searchParams } = new URL(request.url);
+        const metricId = searchParams.get('metricId');
+
+        if (!metricId) {
+            return NextResponse.json(
+                { error: 'Metric ID is required' },
+                { status: 400 }
+            );
+        }
+
+        const dataSource = await getDataSource();
+        const metricRepository = dataSource.getRepository(HealthMetric);
+
+        const metric = await metricRepository.findOne({
+            where: {
+                metricId: parseInt(metricId),
+                memberId: user.memberId
+            }
+        });
+
+        if (!metric) {
+            return NextResponse.json(
+                { error: 'Metric not found' },
+                { status: 404 }
+            );
+        }
+
+        await metricRepository.remove(metric);
+
+        return NextResponse.json(
+            { message: 'Metric deleted successfully' },
+            { status: 200 }
+        );
+
+    } catch (error) {
+        console.error('Error deleting health metric:', error);
+        return NextResponse.json(
+            { error: 'Internal server error' },
+            { status: 500 }
+        );
+    }
+}

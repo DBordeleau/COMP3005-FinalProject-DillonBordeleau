@@ -75,7 +75,7 @@ export default function UpcomingSessionsList({ memberId }: UpcomingSessionsProps
         try {
             const token = localStorage.getItem('token');
 
-            const response = await fetch(`/api/member/training-sessions/${sessionId}`, {
+            const response = await fetch(`/api/member/training-sessions?sessionId=${sessionId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -102,7 +102,7 @@ export default function UpcomingSessionsList({ memberId }: UpcomingSessionsProps
         try {
             const token = localStorage.getItem('token');
 
-            const response = await fetch(`/api/member/group-classes/enroll/${classId}`, {
+            const response = await fetch(`/api/member/group-classes/enroll?classId=${classId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

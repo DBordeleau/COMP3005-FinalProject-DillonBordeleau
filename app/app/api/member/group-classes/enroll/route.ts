@@ -82,3 +82,58 @@ export async function POST(request: NextRequest) {
         );
     }
 }
+
+// Unenrolls the logged in member from a given group class
+export async function DELETE(request: NextRequest) {
+    try {
+        const user = getUserFromRequest(request);
+
+        if (!user || user.userType !== 'member') {
+            return NextResponse.json(
+                { error: 'Unauthorized' },
+                { status: 401 }
+            );
+        }
+
+        const { searchParams } = new URL(request.url);
+        const classId = searchParams.get('classId');
+
+        if (!classId) {
+            return NextResponse.json(
+                { error: 'Class ID is required' },
+                { status: 400 }
+            );
+        }
+
+        const dataSource = await getDataSource();
+        const enrollmentRepository = dataSource.getRepository(ClassEnrollment);
+
+        const enrollment = await enrollmentRepository.findOne({
+            where: {
+                classId: parseInt(classId),
+                memberId: user.memberId
+            }
+        });
+
+        if (!enrollment) {
+            return NextResponse.json(
+                { error: 'Enrollment not found' },
+                { status: 404 }
+            );
+        }
+
+        await enrollmentRepository.remove(enrollment);
+
+        return NextResponse.json(
+            { message: 'Successfully unenrolled from class' },
+            { status: 200 }
+        );
+
+    } catch (error) {
+        console.error('Error unenrolling from class:', error);
+        return NextResponse.json(
+            { error: 'Internal server error' },
+            { status: 500 }
+        );
+    }
+}
